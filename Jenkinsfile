@@ -18,8 +18,6 @@ node {
     }
     
     stage ('Integration') {
-				  echo "Starting Int";
-						
       def lines=readFile('Deployfile').trim().split("\n");
       app=lines[1].split(':')[1].trim()
       env=lines[2].split(':')[1].trim() 
@@ -28,6 +26,9 @@ node {
       echo "Approving $app for Integration"
       
       def data = dh.approveApplication(url,user,pw, app);
+						
+						echo "$data";
+						
       if (data[0])
       {
        echo "Moving $app from Development to Integration"
