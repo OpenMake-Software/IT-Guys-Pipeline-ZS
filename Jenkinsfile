@@ -26,7 +26,6 @@ node {
       echo "Approving $app for Integration"
       
       def data = dh.approveApplication(url,user,pw, app);
-      echo "$data";
       
       if (data[0])
       {
