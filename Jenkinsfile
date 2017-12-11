@@ -18,6 +18,8 @@ node {
     }
     
     stage ('Integration') {
+				  echo "Starting Int";
+						
       def lines=readFile('Deployfile').trim().split("\n");
       app=lines[1].split(':')[1].trim()
       env=lines[2].split(':')[1].trim() 
