@@ -3,15 +3,17 @@
 @Library('deployhub') _
 
 def app=""
-def env=""
+def environment=""
 def cmd=""
-def url="http://rocket:8080"
+def url=""
 def user="admin"
 def pw="admin"
 
 def dh = new deployhub();
 
 node {
+    
+    url = dh.getURL(env);
     
     stage('Clone sources') {
         git url: 'https://github.com/OpenMake-Software/IT-Guys-Pipeline-ZS.git'
@@ -20,7 +22,7 @@ node {
     stage ('Integration') {
       def lines=readFile('Deployfile').trim().split("\n");
       app=lines[1].split(':')[1].trim()
-      env=lines[2].split(':')[1].trim() 
+      environemnt=lines[2].split(':')[1].trim() 
       app=app.substring(1, app.length() - 1)       
  
       echo "Approving $app for Integration"
@@ -70,7 +72,7 @@ node {
     stage ('Test') {
       def lines=readFile('Deployfile').trim().split("\n");
       app=lines[1].split(':')[1].trim()
-      env=lines[2].split(':')[1].trim() 
+      environemnt=lines[2].split(':')[1].trim() 
       app=app.substring(1, app.length() - 1)       
  
       echo "Moving $app from Integration to Testing"
@@ -109,7 +111,7 @@ node {
    stage ('Prod') {
      def lines=readFile('Deployfile').trim().split("\n");
      app=lines[1].split(':')[1].trim()
-     env=lines[2].split(':')[1].trim() 
+     environemnt=lines[2].split(':')[1].trim() 
      app=app.substring(1, app.length() - 1)       
 
      echo "Moving $app from Testing to Prod"
